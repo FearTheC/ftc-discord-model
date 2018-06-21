@@ -12,4 +12,6 @@ interface GuildMemberRepository
     
     public function findById(int $id) : GuildMember;
     
+    public function getGuildMember(int $guildId, int $memberId) : ?GuildMember;
+    
 }
