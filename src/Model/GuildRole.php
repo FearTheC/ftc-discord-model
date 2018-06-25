@@ -19,6 +19,15 @@ class GuildRole
         $this->guildId = $guildId;
     }
     
+    public function toArray() : array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'guild_id' => $this->guildId,
+        ];
+    }
+    
     public static function fromDbRow(array $data)
     {
         return new GuildRole($data['id'], $data['name'], $data['guild_id']);
