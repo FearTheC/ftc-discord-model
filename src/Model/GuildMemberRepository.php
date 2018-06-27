@@ -1,5 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace FTC\Discord\Model;
+
+use FTC\Discord\Model\Collection\GuildMemberCollection;
 
 interface GuildMemberRepository
 {
@@ -8,7 +12,7 @@ interface GuildMemberRepository
     
     public function remove(GuildMember $member);
     
-    public function getAll() : array;
+    public function getAll() : GuildMemberCollection;
     
     public function findById(int $id) : GuildMember;
     

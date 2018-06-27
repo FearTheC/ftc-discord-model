@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace FTC\Discord\Model;
 
 class GuildRole
@@ -17,6 +19,16 @@ class GuildRole
         $this->id = $id;
         $this->name = $name;
         $this->guildId = $guildId;
+    }
+    
+    public function getName()
+    {
+        return $this->name;
+    }
+    
+    public function getId()
+    {
+        return $this->id;
     }
     
     public function toArray() : array

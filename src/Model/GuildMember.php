@@ -1,11 +1,19 @@
 <?php
+declare(strict_types=1);
+
 namespace FTC\Discord\Model;
+
+use FTC\Discord\Model\Collection\GuildRoleCollection;
+use FTC\Discord\Model\ValueObject\Snowflake;
 
 class GuildMember
 {
     
     private $username;
     
+    /**
+     * @var Snowflake
+     */
     private $id;
     
     /**
@@ -13,7 +21,7 @@ class GuildMember
      */
     private $roles;
     
-    private function __construct(int $id, string $username, array $roles = null)
+    private function __construct(Snowflake $id, string $username, GuildRoleCollection $roles = null)
     {
         $this->id = $id;
         $this->username = $username;
@@ -43,7 +51,7 @@ class GuildMember
     
     public function toArray() : array
     {
-        $roles = array_map(function($obj) { return $obj->toArray(); }, $this->roles);
+        $roles = array_map(function($obj) { return $obj->toArray(); }, $this->roles->toArray());
         return [
             'id' => $this->id,
             'username' => $this->username,
@@ -53,7 +61,10 @@ class GuildMember
     
     public static function fromDb(array $data) : GuildMember
     {
-        return new GuildMember($data['id'], $data['username'], $data['roles']);
+        $data['roles'] = json_decode($data['roles'], true);
+        $data['roles'] = array_map([GuildRole::class, 'fromDbRow'], $data['roles']);
+        $data['roles'] = new GuildRoleCollection(...$data['roles']);
+        return new GuildMember(new Snowflake($data['id']), $data['username'], $data['roles']);
     }
     
 }
