@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace FTC\Discord\Model\ValueObject;
 
-class Snowflake
+use FTC\Discord\Exception\Model\ValueObject\Snowflake\InvalidSnowflakeException;
+use FTC\Discord\Model\ModelObject;
+
+class Snowflake implements ModelObject
 {
     const BIT_MAX_SIZE = 64;
     
@@ -18,22 +21,16 @@ class Snowflake
      */
     private $value;
     
-    public function __construct(int $value)
-    {
-        $this->value = $value;
-        $this->validate();
-    }
-    
     public function get() : int
     {
         return $this->value;
     }
     
-    public function getTime() : \DateTime
+    public function getDateTime() : \DateTime
     {
         $ts = $this->value >> self::TIMESTAMP_BIT_SIZE;
         $time = $ts + self::DISCORD_UNIX_EPOCH;
-        $time = $time/1000;
+        $time = (float) $time/1000;
 
         return \DateTime::createFromFormat('U.u', (string) $time);
     }
@@ -43,13 +40,26 @@ class Snowflake
         return (string) $this->value;
     }
     
-    private function validate()
+    private function validate(int $value) : void
     { 
-        $size = mb_strlen((string) decbin($this->value));
-        if ($size > self::BIT_MAX_SIZE)
-        {
-            throw new \Exception(sprintf(self::SIZE_EXCEEDED_MSG, self::BIT_MAX_SIZE, $size));
+        $size = mb_strlen((string) decbin($value));
+        if ($size > self::BIT_MAX_SIZE) {
+            throw InvalidSnowflakeException::sizeIsTooBig(self::BIT_MAX_SIZE, $size);
+        }
+
+        if ($value >> self::TIMESTAMP_BIT_SIZE <= 1000) {
+            throw InvalidSnowflakeException::beforeDiscordUnixEpoch(self::BIT_MAX_SIZE, $size);
         }
     }
     
+    public static function create(int $id) : Snowflake
+    {
+        return new self($id);
+    }
+    
+    private function __construct(int $value)
+    {
+        $this->validate($value);
+        $this->value = $value;
+    }
 }

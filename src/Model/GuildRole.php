@@ -3,22 +3,26 @@ declare(strict_types=1);
 
 namespace FTC\Discord\Model;
 
+use FTC\Discord\Model\ValueObject\Snowflake;
+
 class GuildRole
 {
+    /**
+     * @var Snowflake $id
+     */
     private $id;
     
+    /**
+     * @var string name
+     */
     private $name;
     
-    private $guildId;
-    
     private function __construct(
-        int $id,
-        string $name,
-        int $guildId
+        Snowflake $id,
+        string $name
     ) {
         $this->id = $id;
         $this->name = $name;
-        $this->guildId = $guildId;
     }
     
     public function getName()
@@ -29,6 +33,11 @@ class GuildRole
     public function getId()
     {
         return $this->id;
+    }
+    
+    public static function create(Snowflake $id, string $name)
+    {
+        return new self($id, $name);
     }
     
     public function toArray() : array

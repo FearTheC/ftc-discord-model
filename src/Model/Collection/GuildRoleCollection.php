@@ -17,11 +17,28 @@ class GuildRoleCollection
         array_map(['self', 'add'], $array);
     }
     
-    public function add(GuildRole$role)
+    public function add(GuildRole $role)
     {
-        $this->roles[$role->getId()] = $role;
+        $this->roles[(string) $role->getId()] = $role;
         
         return $this;
+    }
+    
+    public function getById(int $id)
+    {
+        return $this->roles[$id];
+    }
+    
+    public function filterByIds(array $ids)
+    {
+        $filteredRoles = array_filter(
+            $this->roles,
+            function($role) use ($ids) {
+                return in_array($role->getId()->get(), $ids);
+            }
+        );
+        
+        return new self(...$filteredRoles);
     }
     
     public function count()

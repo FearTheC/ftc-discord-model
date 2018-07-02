@@ -19,12 +19,17 @@ class GuildCreate extends Message
         return $this->getData()['name'];
     }
     
+    public function getOwnerId() : int
+    {
+        return (int) $this->getData()['owner_id'];
+    }
+    
     public function getRoles()
     {
         return $this->getData()['roles'];
     }
     
-    public function getUsers()
+    public function getMembers()
     {
         return $this->getData()['members'];
     }

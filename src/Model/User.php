@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace FTC\Discord\Model;
 
-use FTC\Discord\Model\Collection\GuildRoleCollection;
 use FTC\Discord\Model\ValueObject\Snowflake;
 use FTC\Discord\Model\ValueObject\Email;
+use FTC\Discord\Model\ValueObject\DiscordTag;
 
 class User
 {
@@ -23,15 +23,19 @@ class User
     private $email;
     
     /**
-     * @var GuildRole[]
+     * @var DiscordTag $tag
      */
-    private $roles;
+    private $tag;
     
-    private function __construct(Snowflake $id, string $username, GuildRoleCollection $roles = null)
+    
+    private function __construct(
+        Snowflake $id,
+        string $username,
+        Email $email = null)
     {
         $this->id = $id;
         $this->username = $username;
-        $this->roles = $roles;
+        $this->email = $email;
     }
     
     public function getUsername()
@@ -39,20 +43,17 @@ class User
         return $this->username;
     }
     
-    public function getId()
+    public function getId() : Snowflake
     {
         return $this->id;
     }
     
-    public function getRoles()
-    {
-        return $this->roles;
-    }
-    
-    public static function register(int $id, string $username) : GuildMember
+    public static function create(
+        Snowflake $id,
+        string $username,
+        Email $email = null) : User
     {  
-        $member = new GuildMember($id, $username);
-        return $member;
+        return new User($id, $username, $email);
     }
     
     public function toArray() : array
@@ -65,12 +66,12 @@ class User
         ];
     }
     
-    public static function fromDb(array $data) : GuildMember
+    public static function fromArray(array $data) : User
     {
-        $data['roles'] = json_decode($data['roles'], true);
-        $data['roles'] = array_map([GuildRole::class, 'fromDbRow'], $data['roles']);
-        $data['roles'] = new GuildRoleCollection(...$data['roles']);
-        return new GuildMember(new Snowflake($data['id']), $data['username'], $data['roles']);
+        return self::create(
+            Snowflake::create($data['id']),
+            $data['username'],
+            Email::create($data['email']));
     }
     
 }

@@ -2,6 +2,8 @@
 
 namespace FTC\Discord\Model\ValueObject;
 
+use FTC\Discord\Exception\Model\ValueObject\Email\InvalidEmailException;
+
 class Email
 {
     
@@ -10,13 +12,25 @@ class Email
      */
     private $email;
     
-    private function __construct(int $email)
+    
+    public function get() : string
     {
-        if (filter_var($tag, FILTER_VALIDATE_EMAIL)) {
-            throw new Exception(sprintf("Invalid email string, '%d' provided", $tag));
+        return $this->email;
+    }
+    
+    public function __toString() : string
+    {
+        return $this->email;
+    }
+    
+    
+    private function __construct(string $email)
+    {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new InvalidEmailException(sprintf("Invalid email string, '%d' provided", $email));
         }
         
-        $this->email= $email;
+        $this->email = $email;
     }
     
     public static function create(string $email) : self

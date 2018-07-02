@@ -29,16 +29,11 @@ class GuildMember
      */
     private $joinedAt;
     
-    private function __construct(User $user, string $nickname, GuildRoleCollection $roles = null)
+    private function __construct(User $user, GuildRoleCollection $roles = null, $nickname)
     {
         $this->user = $user;
-        $this->nickname = $nickname;
         $this->roles = $roles;
-    }
-    
-    public function getnickname()
-    {
-        return $this->nickname;
+        $this->nickname = $nickname;
     }
     
     public function getUser()
@@ -46,16 +41,21 @@ class GuildMember
         return $this->user;
     }
     
+    public function getId()
+    {
+        return $this->getUser()->getId();
+    }
+    
     public function getRoles()
     {
         return $this->roles;
     }
     
-    public static function register(User $user, string $nickname) : GuildMember
-    {  
-        $member = new GuildMember($user, $nickname);
-        return $member;
-    }
+//     public static function register(User $user, string $nickname) : GuildMember
+//     {  
+//         $member = new GuildMember($user, $nickname);
+//         return $member;
+//     }
     
     public function toArray() : array
     {
@@ -65,6 +65,11 @@ class GuildMember
             'nickname' => $this->nickname,
             'roles' => $roles,
         ];
+    }
+    
+    public static function create(User $user, GuildRoleCollection $roles, string $nickname = null)
+    {
+        return new self($user, $roles, $nickname);
     }
     
     public static function fromDb(array $data) : GuildMember

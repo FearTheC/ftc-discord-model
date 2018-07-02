@@ -2,6 +2,8 @@
 
 namespace FTC\Discord\Model\ValueObject;
 
+use FTC\Discord\Exception\Model\ValueObject\InvalidDiscordTagException;
+
 class DiscordTag
 {
     
@@ -13,10 +15,10 @@ class DiscordTag
     private function __construct(int $tag)
     {
         if ($tag < 0) {
-            throw new Exception(sprintf("Discord Tags are negative numbers, %d provided", $tag));
+            throw InvalidDiscordTagException::signedDigits($tag);
         }
         if (strlen((string) $tag) != 4) {
-            throw new Exception(sprintf("Discord Tags are exactly 4-digits numbers, %d provided", $tag));
+            throw InvalidDiscordTagException::badDigitsCount($tag);
         }
         
         $this->tag = $tag;
