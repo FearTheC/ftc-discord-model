@@ -14,46 +14,33 @@ use FTC\Discord\Model\Guild;
 class GuildFactory
 {
     
-    public function __invoke()
-    {
-        $guildId = $message->getGuildId();
-        $coll = new GuildRoleCollection();
-        $roles = array_map(function($value) use ($guildId, $coll) {
-            $id = Snowflake::create((int) $value['id']);
-            $role = GuildRole::create($id, $value['name']);
-            $coll->add($role);
-        },
-        $message->getRoles());
-            var_dump($coll->count());
-            var_dump($container);
-    }
-    
     public function fromMessage(Message $message)
     {
-        $guildId = Snowflake::create($message->getGuildId());
+        $guildId = Snowflake::create($message->getId());
         $ownerId = Snowflake::create($message->getOwnerId());
-        $guildRoles = new GuildRoleCollection();
-        array_map(
-            function($value) use ($guildRoles) {
+        
+        $rolesArray = array_map(
+            function($value) {
                 $id = Snowflake::create((int) $value['id']);
-                $role = GuildRole::create($id, $value['name']);
-                $guildRoles->add($role);
+                return GuildRole::create($id, $value['name']);
             },
             $message->getRoles());
+        $guildRoles = new GuildRoleCollection(...$rolesArray);
         
-        $members = new GuildMemberCollection();
-        array_map(
-            function($value) use ($members, $guildRoles) {
+        $membersArray = array_map(
+            function($value) use ($guildRoles, $guildId) {
                 $id = Snowflake::create((int) $value['user']['id']);
                 $user = User::create($id, $value['user']['username']);
                 $nickname = $value['nickname'] ?? null;
                 
                 $roles = $guildRoles->filterByIds($value['roles']);
                 
-                $member = GuildMember::create($user, $roles, $nickname);
-                $members->add($member);
+                return GuildMember::create($guildId, $user, $roles, $nickname);
             },
             $message->getMembers());
+        $members = new GuildMemberCollection(...$membersArray);
+        
+
         
         return  Guild::create($guildId, $message->getGuildName(), $ownerId, $guildRoles, $members);
     }

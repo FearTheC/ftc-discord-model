@@ -8,6 +8,10 @@ use FTC\Discord\Model\ValueObject\Snowflake;
 
 class GuildMember
 {
+    /**
+     * @var Snowflake $guildId
+     */
+    private $guildId;
     
     /**
      * @var User $user
@@ -29,8 +33,9 @@ class GuildMember
      */
     private $joinedAt;
     
-    private function __construct(User $user, GuildRoleCollection $roles = null, $nickname)
+    private function __construct(Snowflake $guildId, User $user, GuildRoleCollection $roles = null, $nickname)
     {
+        $this->guildId = $guildId;
         $this->user = $user;
         $this->roles = $roles;
         $this->nickname = $nickname;
@@ -67,9 +72,9 @@ class GuildMember
         ];
     }
     
-    public static function create(User $user, GuildRoleCollection $roles, string $nickname = null)
+    public static function create(Snowflake $guildId, User $user, GuildRoleCollection $roles, string $nickname = null)
     {
-        return new self($user, $roles, $nickname);
+        return new self($guildId, $user, $roles, $nickname);
     }
     
     public static function fromDb(array $data) : GuildMember

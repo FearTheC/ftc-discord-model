@@ -3,9 +3,12 @@
 namespace FTC\Discord\Message;
 
 use FTC\Discord\Message;
+use FTC\Discord\Message\Traits\GuildMemberPayload;
 
 class GuildMemberUpdate extends Message
 {
+    
+    use GuildMemberPayload;
     
     const EVENT_NAME = 'GUILD_MEMBER_UPDATE';
     
@@ -15,5 +18,6 @@ class GuildMemberUpdate extends Message
             return $this->data['roles'];
         }
     }
+    
     
 }

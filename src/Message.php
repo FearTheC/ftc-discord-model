@@ -1,6 +1,8 @@
 <?php
 namespace FTC\Discord;
 
+use FTC\Discord\Model\Guild;
+
 abstract class Message
 {
 
@@ -28,6 +30,26 @@ abstract class Message
     public function getData() : array
     {
         return $this->data;
+    }
+    
+    public function getRoles()
+    {
+        return $this->getData()['roles'];
+    }
+    
+    public function getMembers()
+    {
+        return $this->getData()['members'];
+    }
+    
+    public function getChannels()
+    {
+        return $this->getData()['channels'];
+    }
+    
+    public function getUser() : ?array
+    {
+        return $this->data['user'] ?? null;
     }
     
     public function getId() : int
