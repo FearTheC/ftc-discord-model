@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace FTC\Discord\Model;
 
 use FTC\Discord\Model\Collection\GuildMemberCollection;
+use FTC\Discord\Model\ValueObject\Snowflake\UserId;
+use FTC\Discord\Model\ValueObject\Snowflake\GuildId;
 
 interface GuildMemberRepository
 {
@@ -14,8 +16,8 @@ interface GuildMemberRepository
     
     public function getAll() : GuildMemberCollection;
     
-    public function findById(int $id) : GuildMember;
+    public function findById(UserId $id) : GuildMember;
     
-    public function getGuildMember(int $guildId, int $memberId) : ?GuildMember;
+    public function getGuildMember(GuildId $guildId, UserId $memberId) : ?GuildMember;
     
 }

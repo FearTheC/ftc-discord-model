@@ -6,6 +6,7 @@ namespace FTC\Discord\Model;
 use FTC\Discord\Model\Collection\GuildRoleCollection;
 use FTC\Discord\Model\ValueObject\Snowflake;
 use FTC\Discord\Model\ValueObject\Snowflake\UserId;
+use FTC\Discord\Model\ValueObject\Name\NickName;
 
 class GuildMember
 {
@@ -20,7 +21,7 @@ class GuildMember
     private $userId;
     
     /**
-     * @var string $nickname?
+     * @var NickName $nickname?
      */
     private $nickname;
     
@@ -34,7 +35,7 @@ class GuildMember
      */
     private $joinedAt;
     
-    private function __construct(Snowflake $guildId, UserId $userId, GuildRoleCollection $roles = null, $nickname)
+    private function __construct(Snowflake $guildId, UserId $userId, GuildRoleCollection $roles = null, NickName $nickname = null)
     {
         $this->guildId = $guildId;
         $this->userId = $userId;
@@ -42,31 +43,25 @@ class GuildMember
         $this->nickname = $nickname;
     }
     
-    public function getId()
+    public function getId() : UserId
     {
         return $this->userId;
     }
     
-    public function getRoles()
+    public function getRoles() : GuildRoleCollection
     {
         return $this->roles;
     }
     
-    public function getNickname()
+    public function getNickname() : NickName
     {
         return $this->nickname;
     }
     
-    public function getJoinDate()
+    public function getJoinDate() : \DateTime
     {
         return $this->joinedAt;
     }
-    
-//     public static function register(User $user, string $nickname) : GuildMember
-//     {  
-//         $member = new GuildMember($user, $nickname);
-//         return $member;
-//     }
     
     public function toArray() : array
     {
@@ -78,7 +73,7 @@ class GuildMember
         ];
     }
     
-    public static function create(Snowflake $guildId, UserId $userId, GuildRoleCollection $roles, string $nickname = null)
+    public static function create(Snowflake $guildId, UserId $userId, GuildRoleCollection $roles, NickName $nickname = null)
     {
         return new self($guildId, $userId, $roles, $nickname);
     }

@@ -4,7 +4,7 @@ namespace FTC\Discord\Model\ValueObject\Name;
 
 use FTC\Discord\Model\ValueObject\Name;
 
-class UserName extends Name
+class NickName extends Name
 {
     
     const MAX_LENGTH = 32;

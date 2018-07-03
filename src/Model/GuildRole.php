@@ -4,11 +4,12 @@ declare(strict_types=1);
 namespace FTC\Discord\Model;
 
 use FTC\Discord\Model\ValueObject\Snowflake;
+use FTC\Discord\Model\ValueObject\Snowflake\RoleId;
 
 class GuildRole
 {
     /**
-     * @var Snowflake $id
+     * @var RoleId $id
      */
     private $id;
     
@@ -18,7 +19,7 @@ class GuildRole
     private $name;
     
     private function __construct(
-        Snowflake $id,
+        RoleId $id,
         string $name
     ) {
         $this->id = $id;
@@ -35,7 +36,7 @@ class GuildRole
         return $this->id;
     }
     
-    public static function create(Snowflake $id, string $name)
+    public static function create(RoleId $id, string $name)
     {
         return new self($id, $name);
     }

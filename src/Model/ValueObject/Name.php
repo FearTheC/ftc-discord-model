@@ -56,6 +56,11 @@ class Name implements ModelObject
         return new static($value);
     }
     
+    public function __toString()
+    {
+        return $this->value;
+    }
+    
     
     private function findForbiddenChars($value) : array {
         $culprits = [];

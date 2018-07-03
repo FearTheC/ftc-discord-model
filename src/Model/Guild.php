@@ -6,21 +6,24 @@ use FTC\Discord\Model\Collection\GuildRoleCollection;
 use FTC\Discord\Model\Collection\GuildMemberCollection;
 use FTC\Discord\Model\Collection\ChannelCollection;
 use FTC\Discord\Model\Channel\GuildChannel;
+use FTC\Discord\Model\ValueObject\Snowflake\GuildId;
+use FTC\Discord\Model\ValueObject\Snowflake\UserId;
+use FTC\Discord\Model\ValueObject\Name\GuildName;
 
 class Guild
 {
     /**
-     * @var Snowflake $id
+     * @var GuildId $id
      */
     private $id;
     
     /**
-     * @var string $name
+     * @var GuildName $name
      */
     private $name;
     
     /**
-     * @var Snowflake $ownerId
+     * @var UserId $ownerId
      */
     private $ownerId;
     
@@ -46,17 +49,17 @@ class Guild
     }
     
     
-    public function getOwnerId() : Snowflake
+    public function getOwnerId() : UserId
     {
         return $this->ownerId;
     }
     
-    public function getName() : string
+    public function getName() : GuildName
     {
         return $this->name;
     }
     
-    public function getId() : Snowflake
+    public function getId() : GuildId
     {
         return $this->id;
     }
@@ -72,9 +75,9 @@ class Guild
     }
     
     private function __construct(
-        Snowflake $id,
-        string $name,
-        Snowflake $ownerId,
+        GuildId $id,
+        GuildName $name,
+        UserId $ownerId,
         GuildRoleCollection $roles,
         GuildMemberCollection $members
     ) {
@@ -87,7 +90,7 @@ class Guild
     
     public static function create(
         Snowflake $id,
-        string $name,
+        GuildName $name,
         Snowflake $ownerId,
         GuildRoleCollection $roles,
         GuildMemberCollection $members
