@@ -40,9 +40,24 @@ class Guild
     private $channels;
     
     
-    public function getOwner()
+    public function getOwner() : GuildMember
     {
         return $this->members->getById($this->ownerId);
+    }
+    
+    public function getName() : string
+    {
+        return $this->name;
+    }
+    
+    public function getId() : Snowflake
+    {
+        return $this->id;
+    }
+    
+    public function getMembers() : GuildMemberCollection
+    {
+        return $this->members;
     }
     
     private function __construct(
