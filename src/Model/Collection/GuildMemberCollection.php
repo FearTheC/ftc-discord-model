@@ -6,7 +6,7 @@ namespace FTC\Discord\Model\Collection;
 use FTC\Discord\Model\GuildMember;
 use FTC\Discord\Model\ValueObject\Snowflake;
 
-class GuildMemberCollection
+class GuildMemberCollection implements \Countable, \IteratorAggregate
 {
     /**
      * @var GuildMember[];
@@ -29,6 +29,7 @@ class GuildMemberCollection
         
         return $this;
     }
+
     
     public function count()
     {
@@ -39,5 +40,10 @@ class GuildMemberCollection
     public function toArray()
     {
         return $this->members;
+    }
+    
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->members);
     }
 }

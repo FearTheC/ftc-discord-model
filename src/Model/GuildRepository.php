@@ -1,6 +1,8 @@
 <?php
 namespace FTC\Discord\Model;
 
+use FTC\Discord\Model\ValueObject\Snowflake;
+
 interface GuildRepository
 {
     
@@ -8,6 +10,6 @@ interface GuildRepository
     
     public function getAll() : array;
     
-    public function findById(int $id) : ?Guild;
+    public function findById(Snowflake $id) : ?Guild;
     
 }

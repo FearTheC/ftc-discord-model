@@ -5,6 +5,7 @@ namespace FTC\Discord\Model;
 
 use FTC\Discord\Model\Collection\GuildRoleCollection;
 use FTC\Discord\Model\ValueObject\Snowflake;
+use FTC\Discord\Model\ValueObject\Snowflake\UserId;
 
 class GuildMember
 {
@@ -14,9 +15,9 @@ class GuildMember
     private $guildId;
     
     /**
-     * @var User $user
+     * @var UserId $user
      */
-    private $user;
+    private $userId;
     
     /**
      * @var string $nickname?
@@ -33,27 +34,32 @@ class GuildMember
      */
     private $joinedAt;
     
-    private function __construct(Snowflake $guildId, User $user, GuildRoleCollection $roles = null, $nickname)
+    private function __construct(Snowflake $guildId, UserId $userId, GuildRoleCollection $roles = null, $nickname)
     {
         $this->guildId = $guildId;
-        $this->user = $user;
+        $this->userId = $userId;
         $this->roles = $roles;
         $this->nickname = $nickname;
     }
     
-    public function getUser()
-    {
-        return $this->user;
-    }
-    
     public function getId()
     {
-        return $this->getUser()->getId();
+        return $this->userId;
     }
     
     public function getRoles()
     {
         return $this->roles;
+    }
+    
+    public function getNickname()
+    {
+        return $this->nickname;
+    }
+    
+    public function getJoinDate()
+    {
+        return $this->joinedAt;
     }
     
 //     public static function register(User $user, string $nickname) : GuildMember
@@ -72,9 +78,9 @@ class GuildMember
         ];
     }
     
-    public static function create(Snowflake $guildId, User $user, GuildRoleCollection $roles, string $nickname = null)
+    public static function create(Snowflake $guildId, UserId $userId, GuildRoleCollection $roles, string $nickname = null)
     {
-        return new self($guildId, $user, $roles, $nickname);
+        return new self($guildId, $userId, $roles, $nickname);
     }
     
     public static function fromDb(array $data) : GuildMember
@@ -82,7 +88,7 @@ class GuildMember
         $data['roles'] = json_decode($data['roles'], true);
         $data['roles'] = array_map([GuildRole::class, 'fromDbRow'], $data['roles']);
         $data['roles'] = new GuildRoleCollection(...$data['roles']);
-        return new GuildMember(new Snowflake($data['user']), $data['nickname'], $data['roles']);
+        return new GuildMember(new UserId($data['user']), $data['nickname'], $data['roles']);
     }
     
 }

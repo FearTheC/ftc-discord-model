@@ -45,6 +45,12 @@ class Guild
         return $this->members->getById($this->ownerId);
     }
     
+    
+    public function getOwnerId() : Snowflake
+    {
+        return $this->ownerId;
+    }
+    
     public function getName() : string
     {
         return $this->name;
@@ -53,6 +59,11 @@ class Guild
     public function getId() : Snowflake
     {
         return $this->id;
+    }
+    
+    public function getRoles() : GuildRoleCollection
+    {
+        return $this->roles;
     }
     
     public function getMembers() : GuildMemberCollection

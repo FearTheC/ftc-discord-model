@@ -12,6 +12,12 @@ class DiscordTag
      */
     private $tag;
     
+    public function __toString()
+    {
+        return (string) $this->tag;
+    }
+    
+    
     private function __construct(int $tag)
     {
         if ($tag < 0) {

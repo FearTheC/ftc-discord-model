@@ -54,7 +54,7 @@ class Snowflake implements ModelObject
     
     public static function create(int $id) : Snowflake
     {
-        return new self($id);
+        return new static($id);
     }
     
     private function __construct(int $value)
