@@ -18,19 +18,19 @@ class DiscordTag
     }
     
     
-    private function __construct(int $tag)
+    private function __construct(string $tag)
     {
-        if ($tag < 0) {
+        if ((int) $tag < 0) {
             throw InvalidDiscordTagException::signedDigits($tag);
         }
         if (strlen((string) $tag) != 4) {
             throw InvalidDiscordTagException::badDigitsCount($tag);
         }
         
-        $this->tag = $tag;
+        $this->tag = (int) $tag;
     }
     
-    public static function create(int $tag) : self
+    public static function create(string $tag) : self
     {
         return new self($tag);
     }

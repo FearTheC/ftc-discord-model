@@ -5,7 +5,7 @@ namespace FTC\Discord\Model\Collection;
 
 use FTC\Discord\Model\Channel;
 
-class ChannelCollection
+class GuildChannelCollection
 {
     /**
      * @var Channel[];

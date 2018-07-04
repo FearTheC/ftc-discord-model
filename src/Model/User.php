@@ -6,6 +6,7 @@ namespace FTC\Discord\Model;
 use FTC\Discord\Model\ValueObject\Email;
 use FTC\Discord\Model\ValueObject\DiscordTag;
 use FTC\Discord\Model\ValueObject\Snowflake\UserId;
+use FTC\Discord\Model\ValueObject\Name\UserName;
 
 class User
 {
@@ -35,7 +36,7 @@ class User
     
     private function __construct(
         UserId $id,
-        string $username,
+        UserName $username,
         DiscordTag $tag,
         Email $email = null,
         bool $isBot = false)
@@ -74,9 +75,9 @@ class User
     
     public static function create(
         UserId $id,
-        string $username,
+        UserName $username,
         DiscordTag $tag,
-        Email $email,
+        Email $email = null,
         bool $isBot = false) : User
     {  
         return new User($id, $username, $tag, $email, $isBot);
