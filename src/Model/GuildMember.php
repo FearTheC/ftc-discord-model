@@ -8,6 +8,7 @@ use FTC\Discord\Model\ValueObject\Snowflake;
 use FTC\Discord\Model\ValueObject\Snowflake\UserId;
 use FTC\Discord\Model\ValueObject\Name\NickName;
 use FTC\Discord\Model\ValueObject\Snowflake\GuildId;
+use FTC\Discord\Model\ValueObject\Snowflake\RoleId;
 
 class GuildMember
 {
@@ -23,19 +24,19 @@ class GuildMember
     private $nickname;
     
     /**
-     * @var GuildRoleCollection $roles
+     * @var RoleId[] $rolesId
      */
-    private $roles;
+    private $rolesId;
     
     /**
      * @var \DateTime $joinedAt
      */
     private $joinedAt;
     
-    private function __construct(UserId $userId, GuildRoleCollection $roles = null, \DateTime $joinedAt, NickName $nickname = null)
+    private function __construct(UserId $userId, $rolesId= null, \DateTime $joinedAt, NickName $nickname = null)
     {
         $this->userId = $userId;
-        $this->roles = $roles;
+        $this->roles = $rolesId;
         $this->nickname = $nickname;
         $this->joinedAt = $joinedAt;
     }
@@ -45,9 +46,9 @@ class GuildMember
         return $this->userId;
     }
     
-    public function getRoles() : GuildRoleCollection
+    public function getRoles() : array
     {
-        return $this->roles;
+        return $this->rolesId;
     }
     
     public function getNickname() : ?NickName
@@ -62,25 +63,16 @@ class GuildMember
     
     public function toArray() : array
     {
-        $roles = array_map(function($obj) { return $obj->toArray(); }, $this->roles->toArray());
         return [
             'user' => $this->user,
             'nickname' => $this->nickname,
-            'roles' => $roles,
+            'roles' => $rolesId,
         ];
     }
     
-    public static function create(UserId $userId, GuildRoleCollection $roles, \DateTime $joinedAt, NickName $nickname = null)
+    public static function create(UserId $userId, $roles, \DateTime $joinedAt, NickName $nickname = null)
     {
         return new self($userId, $roles, $joinedAt, $nickname);
-    }
-    
-    public static function fromDb(array $data) : GuildMember
-    {
-        $data['roles'] = json_decode($data['roles'], true);
-        $data['roles'] = array_map([GuildRole::class, 'fromDbRow'], $data['roles']);
-        $data['roles'] = new GuildRoleCollection(...$data['roles']);
-        return new GuildMember(new UserId($data['user']), $data['nickname'], $data['roles']);
     }
     
 }

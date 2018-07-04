@@ -19,7 +19,7 @@ class GuildChannelCollection
     
     public function add(Channel $channel)
     {
-        $this->channels[$channel->getId()] = $channel;
+        $this->channels[] = $channel;
         
         return $this;
     }

@@ -3,12 +3,10 @@
 namespace FTC\Discord\Model\Channel;
 
 use FTC\Discord\Model\Channel;
-use FTC\Discord\Model\ValueObject\Snowflake;
-use FTC\Discord\Model\ValueObject\Text\ChannelTopic;
-use FTC\Discord\Model\ValueObject\PermissionOverwrite;
 use FTC\Discord\Model\ValueObject\Snowflake\CategoryId;
 use FTC\Discord\Model\ValueObject\Snowflake\ChannelId;
 use FTC\Discord\Model\ValueObject\Name\ChannelName;
+use FTC\Discord\Model\Collection\PermissionOverwriteCollection;
 
 abstract class GuildChannel extends Channel
 {
@@ -24,9 +22,9 @@ abstract class GuildChannel extends Channel
     private $position;
     
     /**
-     * @var PermissionOverwrite $permissionOverwrite
+     * @var PermissionOverwriteCollection $permissionOverwrites
      */
-    private $permissionOverwrite;
+    private $permissionOverwrites;
     
     /**
      * @var string $name
@@ -37,13 +35,13 @@ abstract class GuildChannel extends Channel
         ChannelId $id,
         ChannelName $name,
         int $position,
-        PermissionOverwrite $permissionOverwrites = null,
+        PermissionOverwriteCollection $permissionOverwrites,
         CategoryId $categoryId = null
     ) {
         $this->position = $position;
         $this->categoryId = $categoryId;
         $this->name = $name;
-        $this->permissionOverwrite = $permissionOverwrites;
+        $this->permissionOverwrites = $permissionOverwrites;
         parent::__construct($id);
     }
     
