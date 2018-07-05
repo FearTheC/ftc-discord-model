@@ -3,12 +3,9 @@ declare(strict_types=1);
 
 namespace FTC\Discord\Model;
 
-use FTC\Discord\Model\Collection\GuildRoleCollection;
-use FTC\Discord\Model\ValueObject\Snowflake;
 use FTC\Discord\Model\ValueObject\Snowflake\UserId;
 use FTC\Discord\Model\ValueObject\Name\NickName;
-use FTC\Discord\Model\ValueObject\Snowflake\GuildId;
-use FTC\Discord\Model\ValueObject\Snowflake\RoleId;
+use FTC\Discord\Model\Collection\GuildRoleIdCollection;
 
 class GuildMember
 {
@@ -24,7 +21,7 @@ class GuildMember
     private $nickname;
     
     /**
-     * @var RoleId[] $rolesId
+     * @var GuildRoleIdCollection $rolesId
      */
     private $rolesId;
     
@@ -33,10 +30,10 @@ class GuildMember
      */
     private $joinedAt;
     
-    private function __construct(UserId $userId, $rolesId= null, \DateTime $joinedAt, NickName $nickname = null)
+    private function __construct(UserId $userId, GuildRoleIdCollection $rolesId= null, \DateTime $joinedAt, NickName $nickname = null)
     {
         $this->userId = $userId;
-        $this->roles = $rolesId;
+        $this->rolesId = $rolesId;
         $this->nickname = $nickname;
         $this->joinedAt = $joinedAt;
     }
@@ -46,7 +43,7 @@ class GuildMember
         return $this->userId;
     }
     
-    public function getRoles() : array
+    public function getRoles() : GuildRoleIdCollection
     {
         return $this->rolesId;
     }
@@ -70,7 +67,7 @@ class GuildMember
         ];
     }
     
-    public static function create(UserId $userId, $roles, \DateTime $joinedAt, NickName $nickname = null)
+    public static function create(UserId $userId, GuildRoleIdCollection $roles, \DateTime $joinedAt, NickName $nickname = null)
     {
         return new self($userId, $roles, $joinedAt, $nickname);
     }
