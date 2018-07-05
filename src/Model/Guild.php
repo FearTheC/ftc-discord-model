@@ -9,6 +9,7 @@ use FTC\Discord\Model\Channel\GuildChannel;
 use FTC\Discord\Model\ValueObject\Snowflake\GuildId;
 use FTC\Discord\Model\ValueObject\Snowflake\UserId;
 use FTC\Discord\Model\ValueObject\Name\GuildName;
+use FTC\Discord\Model\Collection\GuildChannelCollection;
 
 class Guild
 {
@@ -69,6 +70,11 @@ class Guild
         return $this->roles;
     }
     
+    public function getChannels() : GuildChannelCollection
+    {
+        return $this->channels;
+    }
+    
     public function getMembers() : GuildMemberCollection
     {
         return $this->members;
@@ -79,13 +85,15 @@ class Guild
         GuildName $name,
         UserId $ownerId,
         GuildRoleCollection $roles,
-        GuildMemberCollection $members
+        GuildMemberCollection $members,
+        GuildChannelCollection $channels
     ) {
         $this->id = $id;
         $this->name = $name;
         $this->ownerId = $ownerId;
         $this->roles = $roles;
         $this->members = $members;
+        $this->channels = $channels;
     }
     
     public static function create(
@@ -93,8 +101,9 @@ class Guild
         GuildName $name,
         Snowflake $ownerId,
         GuildRoleCollection $roles,
-        GuildMemberCollection $members
+        GuildMemberCollection $members,
+        GuildChannelCollection $channels
         ) {
-            return new self($id, $name, $ownerId, $roles, $members);
+            return new self($id, $name, $ownerId, $roles, $members, $channels);
     }
 }

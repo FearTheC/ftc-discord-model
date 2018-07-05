@@ -37,4 +37,13 @@ class PermissionOverwrite
         return (string) $this->permisions;
     }
     
+    public function toArray()
+    {
+        return [
+            'subject_id' => $this->subjectId->get(),
+            'allow' => $this->allow,
+            'deny' => $this->deny,
+        ];
+    }
+    
 }

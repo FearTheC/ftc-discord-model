@@ -25,6 +25,23 @@ class Voice extends GuildChannel
      */
     private $bitrate;
     
+    /**
+     * @var int $typeId
+     */
+    protected $typeId = self::GUILD_VOICE;
+    
+    
+    public function getBitrate() : int
+    {
+        return $this->bitrate;
+    }
+    
+    public function getUserLimit() : ?int
+    {
+        return $this->userLimit;
+    }
+    
+    
     private function __construct(
         ChannelId $id,
         ChannelName $name,

@@ -18,6 +18,11 @@ class TextChannel extends GuildChannel
      */
     private $topic;
     
+    /**
+     * @var int $typeId
+     */
+    protected $typeId = self::GUILD_TEXT;
+    
     private function __construct(
         ChannelId $id,
         ChannelName $name,
@@ -28,6 +33,11 @@ class TextChannel extends GuildChannel
     ) {
         $this->topic = $topic;
         parent::__construct($id, $name, $position, $permissionOverwrites, $categoryId);
+    }
+    
+    public function getTopic() : ?ChannelTopic
+    {
+        return $this->topic;
     }
     
     public static function create(

@@ -12,6 +12,11 @@ use FTC\Discord\Model\ValueObject\Snowflake\CategoryId;
 class Category extends GuildChannel
 {
     
+    /**
+     * @var int $typeId
+     */
+    protected $typeId = self::GUILD_CATEGORY;
+    
     private function __construct(
         ChannelId $id,
         ChannelName $name,

@@ -1,7 +1,6 @@
 <?php
 namespace FTC\Discord;
 
-use FTC\Discord\Model\Guild;
 
 abstract class Message
 {

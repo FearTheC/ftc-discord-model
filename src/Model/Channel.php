@@ -16,9 +16,20 @@ abstract class Channel
      */
     private $id;
     
+    
     protected function __construct(ChannelId $id)
     {
         $this->id = $id;
+    }
+    
+    public function getTypeId() : int
+    {
+        return $this->typeId;
+    }
+    
+    public function getId() : ChannelId
+    {
+        return $this->id;
     }
     
 }

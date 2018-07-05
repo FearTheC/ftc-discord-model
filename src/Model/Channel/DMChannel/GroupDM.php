@@ -2,9 +2,14 @@
 
 namespace FTC\Discord\Model\GuildChannel;
 
-use FTC\Discord\Model\GuildChannel;
+use FTC\Discord\Model\Channel\DMChannel;
 
-class GroupDM extends GuildChannel
+class GroupDM extends DMChannel
 {
+    
+    /**
+     * @var int $typeId
+     */
+    private $typeId = self::GROUP_DM;
     
 }

@@ -17,4 +17,5 @@ abstract class DMChannel extends Channel
      * @var GuildMemberCollection $recipients 
      */
     private $recipients;
+    
 }

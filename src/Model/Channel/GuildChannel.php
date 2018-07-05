@@ -7,6 +7,7 @@ use FTC\Discord\Model\ValueObject\Snowflake\CategoryId;
 use FTC\Discord\Model\ValueObject\Snowflake\ChannelId;
 use FTC\Discord\Model\ValueObject\Name\ChannelName;
 use FTC\Discord\Model\Collection\PermissionOverwriteCollection;
+use FTC\Discord\Model\ValueObject\PermissionOverwrite;
 
 abstract class GuildChannel extends Channel
 {
@@ -27,7 +28,7 @@ abstract class GuildChannel extends Channel
     private $permissionOverwrites;
     
     /**
-     * @var string $name
+     * @var ChannelName $name
      */
     private $name;
     
@@ -43,6 +44,27 @@ abstract class GuildChannel extends Channel
         $this->name = $name;
         $this->permissionOverwrites = $permissionOverwrites;
         parent::__construct($id);
+    }
+    
+    
+    public function getName() : ChannelName
+    {
+        return $this->name;
+    }
+    
+    public function getPosition() : int
+    {
+        return $this->position;
+    }
+    
+    public function getPermissionOverwrites() : PermissionOverwriteCollection
+    {
+        return $this->permissionOverwrites;
+    }
+    
+    public function getCategoryId() : ?ChannelId
+    {
+        return $this->categoryId;
     }
     
 }
