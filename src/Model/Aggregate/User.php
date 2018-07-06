@@ -1,7 +1,6 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
-namespace FTC\Discord\Model;
+namespace FTC\Discord\Model\Aggregate;
 
 use FTC\Discord\Model\ValueObject\Email;
 use FTC\Discord\Model\ValueObject\DiscordTag;

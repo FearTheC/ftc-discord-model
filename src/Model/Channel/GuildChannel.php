@@ -2,14 +2,13 @@
 
 namespace FTC\Discord\Model\Channel;
 
-use FTC\Discord\Model\Channel;
 use FTC\Discord\Model\ValueObject\Snowflake\CategoryId;
 use FTC\Discord\Model\ValueObject\Snowflake\ChannelId;
 use FTC\Discord\Model\ValueObject\Name\ChannelName;
 use FTC\Discord\Model\Collection\PermissionOverwriteCollection;
-use FTC\Discord\Model\ValueObject\PermissionOverwrite;
+use FTC\Discord\Model\Aggregate\GuildChannel as GuildChannelSup;
 
-abstract class GuildChannel extends Channel
+abstract class GuildChannel extends GuildChannelSup
 {
     
     /**

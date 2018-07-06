@@ -1,5 +1,6 @@
-<?php
-namespace FTC\Discord\Model;
+<?php declare(strict_types=1);
+
+namespace FTC\Discord\Model\Aggregate;
 
 interface GuildRoleRepository
 {

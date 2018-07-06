@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace FTC\Discord\Model\Collection;
 
-use FTC\Discord\Model\User;
+use FTC\Discord\Model\Aggregate\User;
 
 class UserCollection
 {

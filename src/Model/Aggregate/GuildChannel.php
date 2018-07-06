@@ -1,9 +1,9 @@
 <?php
-namespace FTC\Discord\Model;
+namespace FTC\Discord\Model\Aggregate;
 
 use FTC\Discord\Model\ValueObject\Snowflake\ChannelId;
 
-abstract class Channel
+abstract class GuildChannel
 {
     const GUILD_TEXT = 0;
     const DM = 1;

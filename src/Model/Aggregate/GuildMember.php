@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FTC\Discord\Model;
+namespace FTC\Discord\Model\Aggregate;
 
 use FTC\Discord\Model\ValueObject\Snowflake\UserId;
 use FTC\Discord\Model\ValueObject\Name\NickName;

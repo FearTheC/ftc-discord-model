@@ -1,5 +1,5 @@
 <?php
-namespace FTC\Discord\Model;
+namespace FTC\Discord\Model\Aggregate;
 
 use FTC\Discord\Model\ValueObject\Snowflake;
 use FTC\Discord\Model\Collection\GuildRoleCollection;

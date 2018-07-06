@@ -1,9 +1,8 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace FTC\Discord\Model\Collection;
 
-use FTC\Discord\Model\GuildRole;
+use FTC\Discord\Model\Aggregate\GuildRole;
 
 class GuildRoleCollection
 {

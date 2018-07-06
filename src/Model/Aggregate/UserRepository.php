@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace FTC\Discord\Model;
+namespace FTC\Discord\Model\Aggregate;
 
-use FTC\Discord\Model\ValueObject\Snowflake;
+use FTC\Discord\Model\ValueObject\Snowflake\UserId;
 
 interface UserRepository
 {
@@ -11,6 +11,6 @@ interface UserRepository
     
     public function getAll() : array;
     
-    public function findById(Snowflake $id) : ?User;
+    public function findById(UserId $id) : ?User;
     
 }

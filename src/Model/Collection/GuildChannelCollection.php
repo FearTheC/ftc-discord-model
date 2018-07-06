@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace FTC\Discord\Model\Collection;
 
-use FTC\Discord\Model\Channel;
+use FTC\Discord\Model\Aggregate\GuildChannel;
 
 class GuildChannelCollection
 {
@@ -12,12 +12,12 @@ class GuildChannelCollection
      */
     private $channels;
     
-    public function __construct(Channel ...$array)
+    public function __construct(GuildChannel ...$array)
     {
         array_map(['self', 'add'], $array);
     }
     
-    public function add(Channel $channel)
+    public function add(GuildChannel $channel)
     {
         $this->channels[] = $channel;
         
