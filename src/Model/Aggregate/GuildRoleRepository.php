@@ -2,14 +2,19 @@
 
 namespace FTC\Discord\Model\Aggregate;
 
+use FTC\Discord\Model\Collection\GuildRoleCollection;
+use FTC\Discord\Model\ValueObject\Snowflake\RoleId;
+use FTC\Discord\Model\ValueObject\Name\RoleName;
+use FTC\Discord\Model\ValueObject\Snowflake\GuildId;
+
 interface GuildRoleRepository
 {
-    public function save(GuildRole $member);
+    public function save(GuildRole $member, GuildId $guildId);
     
-    public function getAll() : array;
+    public function getAll() : GuildRoleCollection;
     
-    public function findById(int $id) : GuildRole;
+    public function findById(RoleId $id) : GuildRole;
     
-    public function findByName(string $name, int $guildId) : ?GuildRole;
+    public function findByName(RoleName $name, GuildId $guildId) : ?GuildRole;
     
 }

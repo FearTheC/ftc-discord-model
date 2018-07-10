@@ -10,7 +10,7 @@ use FTC\Discord\Model\ValueObject\Snowflake\GuildId;
 interface GuildMemberRepository
 {
     
-    public function add(GuildMember $member);
+    public function save(GuildMember $member, GuildId $guildId);
     
     public function remove(GuildMember $member);
     
