@@ -35,4 +35,9 @@ class GuildChannelCollection implements Collection
     {
         return $this->channels;
     }
+    
+    public function getIterator()
+    {
+        return $this->channels;
+    }
 }

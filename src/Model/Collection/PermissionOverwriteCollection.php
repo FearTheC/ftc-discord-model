@@ -47,4 +47,9 @@ class PermissionOverwriteCollection implements Collection
         }
         return json_encode($this->toArray());
     }
+    
+    public function getIterator()
+    {
+        return $this->permissionsOverwrites;
+    }
 }
