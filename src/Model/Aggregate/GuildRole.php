@@ -81,6 +81,16 @@ class GuildRole
         return $this->color->getHTML();
     }
     
+    public function getIntegerColor() : int
+    {
+        return $this->color->getInteger();
+    }
+    
+    public function getPermissionsInteger() : int
+    {
+        return (int) $this->permissions->__toString();
+    }
+    
     public function getId()
     {
         return $this->id;

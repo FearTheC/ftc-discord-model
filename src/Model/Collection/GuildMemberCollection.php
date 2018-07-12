@@ -45,6 +45,6 @@ class GuildMemberCollection implements Collection
     
     public function getIterator()
     {
-        return new \ArrayIterator($this->members);
+        return $this->members;
     }
 }

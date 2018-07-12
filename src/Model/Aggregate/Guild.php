@@ -84,12 +84,12 @@ class Guild
         return $this->roles;
     }
     
-    public function getChannels() : GuildChannelCollection
+    public function getChannels() : GuildChannelIdCollection
     {
         return $this->channels;
     }
     
-    public function getMembers() : GuildMemberCollection
+    public function getMembers() : GuildMemberIdCollection
     {
         return $this->members;
     }

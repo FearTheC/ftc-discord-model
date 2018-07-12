@@ -7,6 +7,9 @@ use FTC\Discord\Model\Aggregate\GuildMemberRepository;
 use FTC\Discord\Model\Aggregate\GuildRoleRepository;
 use FTC\Discord\Model\Aggregate\GuildChannelRepository;
 use FTC\Discord\Model\Aggregate\Guild;
+use FTC\Discord\Model\Collection\GuildRoleCollection;
+use FTC\Discord\Model\Collection\GuildMemberCollection;
+use FTC\Discord\Model\Collection\GuildChannelCollection;
 
 class GuildCreation
 {
@@ -43,27 +46,30 @@ class GuildCreation
         $this->guildChannelRepository = $guildChannelRepository;
     }
     
-    public function __invoke(Guild $guild)
-    {
+    public function __invoke(
+        Guild $guild,
+        GuildRoleCollection $roles,
+        GuildMemberCollection $members,
+        GuildChannelCollection $channels
+     ) {
         $this->guildRepository->save($guild);
-        
         
         array_map(
             [$this->guildRoleRepository, 'save'],
-            $guild->getRoles()->toArray(),
-            array_fill(0, $guild->getRoles()->count(), $guild->getId())
+            $roles->getIterator(),
+            array_fill(0, $roles->count(), $guild->getId())
             );
         
         array_map(
             [$this->guildMemberRepository, 'save'],
-            $guild->getMembers()->toArray(),
-            array_fill(0, $guild->getMembers()->count(), $guild->getId())
+            $members->getIterator(),
+            array_fill(0, $members->count(), $guild->getId())
             );
         
         array_map(
             [$this->guildChannelRepository, 'save'],
-            $guild->getChannels()->toArray(),
-            array_fill(0, $guild->getChannels()->count(), $guild->getId())
+            $channels->getIterator(),
+            array_fill(0, $channels->count(), $guild->getId())
             );
     }
     

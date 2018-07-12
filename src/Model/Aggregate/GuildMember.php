@@ -65,9 +65,9 @@ class GuildMember
         return $this;
     }
     
-    public function getRolesIds() : array
+    public function getRolesIds() : GuildRoleIdCollection
     {
-        return $this->rolesId->getIterator();
+        return $this->rolesId;
     }
     
     public function getJoinDate() : \DateTime
