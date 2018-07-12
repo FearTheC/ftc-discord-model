@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace FTC\Discord\Model\Collection;
 
 use FTC\Discord\Model\ValueObject\PermissionOverwrite;
+use FTC\Discord\Model\Collection;
 
-class PermissionOverwriteCollection
+class PermissionOverwriteCollection implements Collection
 {
     /**
      * @var PermissionOverwrite[];

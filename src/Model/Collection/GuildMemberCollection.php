@@ -5,8 +5,9 @@ namespace FTC\Discord\Model\Collection;
 
 use FTC\Discord\Model\Aggregate\GuildMember;
 use FTC\Discord\Model\ValueObject\Snowflake;
+use FTC\Discord\Model\Collection;
 
-class GuildMemberCollection implements \Countable, \IteratorAggregate
+class GuildMemberCollection implements Collection
 {
     /**
      * @var GuildMember[];

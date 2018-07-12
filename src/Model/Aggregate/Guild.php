@@ -10,6 +10,10 @@ use FTC\Discord\Model\ValueObject\Snowflake\GuildId;
 use FTC\Discord\Model\ValueObject\Snowflake\UserId;
 use FTC\Discord\Model\ValueObject\Name\GuildName;
 use FTC\Discord\Model\Collection\GuildChannelCollection;
+use FTC\Discord\Model\ValueObject\DomainName;
+use FTC\Discord\Model\Collection\GuildRoleIdCollection;
+use FTC\Discord\Model\Collection\GuildMemberIdCollection;
+use FTC\Discord\Model\Collection\GuildChannelIdCollection;
 
 class Guild
 {
@@ -29,7 +33,7 @@ class Guild
     private $ownerId;
     
     /**
-     * @var GuildRoleCollection $roles
+     * @var GuildRoleIdCollection $roles
      */
     private $roles;
     
@@ -42,6 +46,11 @@ class Guild
      * @var ChannelCollection
      */
     private $channels;
+    
+    /**
+     * @var DomainName $domainName
+     */
+    private $domainName;
     
     
     public function getOwner() : GuildMember
@@ -65,7 +74,12 @@ class Guild
         return $this->id;
     }
     
-    public function getRoles() : GuildRoleCollection
+    public function getDomainName()
+    {
+        return (string) $this->domainName;
+    }
+    
+    public function getRoles() : GuildRoleIdCollection
     {
         return $this->roles;
     }
@@ -84,9 +98,10 @@ class Guild
         GuildId $id,
         GuildName $name,
         UserId $ownerId,
-        GuildRoleCollection $roles,
-        GuildMemberCollection $members,
-        GuildChannelCollection $channels
+        GuildRoleIdCollection$roles,
+        GuildMemberIdCollection$members,
+        GuildChannelIdCollection$channels,
+        DomainName $domainName = null
     ) {
         $this->id = $id;
         $this->name = $name;
@@ -94,16 +109,18 @@ class Guild
         $this->roles = $roles;
         $this->members = $members;
         $this->channels = $channels;
+        $this->domainName = $domainName;
     }
     
     public static function create(
         Snowflake $id,
         GuildName $name,
         Snowflake $ownerId,
-        GuildRoleCollection $roles,
-        GuildMemberCollection $members,
-        GuildChannelCollection $channels
+        GuildRoleIdCollection $roles,
+        GuildMemberIdCollection $members,
+        GuildChannelIdCollection $channels,
+        DomainName $domainName = null
         ) {
-            return new self($id, $name, $ownerId, $roles, $members, $channels);
+            return new self($id, $name, $ownerId, $roles, $members, $channels, $domainName);
     }
 }

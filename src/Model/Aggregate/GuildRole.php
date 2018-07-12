@@ -66,11 +66,6 @@ class GuildRole
         return $this->position;
     }
     
-    public function getpermissions() : Permission
-    {
-        return $this->permissions;
-    }
-    
     public function isMentionable() : bool
     {
         return $this->mentionable;
@@ -81,14 +76,19 @@ class GuildRole
         return $this->hoist;
     }
     
-    public function getColor() : Color
+    public function getHTMLColor() : string
     {
-        return $this->color;
+        return $this->color->getHTML();
     }
     
     public function getId()
     {
         return $this->id;
+    }
+    
+    public function can($value) : bool
+    {
+        return ($this->permissions->__toString() & $value) > 0;
     }
     
     public static function create(RoleId $id, RoleName $name, Color $color, Permission $permissions, int $position, bool $mentionnable, bool $hoist)

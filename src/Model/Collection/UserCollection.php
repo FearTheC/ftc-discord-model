@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace FTC\Discord\Model\Collection;
 
 use FTC\Discord\Model\Aggregate\User;
+use FTC\Discord\Model\Collection;
 
-class UserCollection
+class UserCollection implements Collection
 {
     /**
      * @var User[] $users;
@@ -34,4 +35,11 @@ class UserCollection
     {
         return $this->users;
     }
+    
+    
+    public function getIterator()
+    {
+        return $this->users;
+    }
+    
 }

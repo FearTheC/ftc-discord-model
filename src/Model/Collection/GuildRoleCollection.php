@@ -3,8 +3,9 @@
 namespace FTC\Discord\Model\Collection;
 
 use FTC\Discord\Model\Aggregate\GuildRole;
+use FTC\Discord\Model\Collection;
 
-class GuildRoleCollection
+class GuildRoleCollection implements Collection
 {
     /**
      * @var GuildRole[];
@@ -40,9 +41,22 @@ class GuildRoleCollection
         return new self(...$filteredRoles);
     }
     
+    public function orderByPosition() : GuildRoleCollection
+    {
+        $orderedRoles = $this->roles;
+        usort($orderedRoles, function($a, $b) { return ($a->getPosition() < $b->getPosition()); });
+       
+        return new self(...$orderedRoles);
+    }
+    
     public function count()
     {
         return count($this->roles);
+    }
+    
+    public function getIterator()
+    {
+        return $this->roles;
     }
     
     

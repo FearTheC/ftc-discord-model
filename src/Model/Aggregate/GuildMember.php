@@ -26,11 +26,16 @@ class GuildMember
     private $rolesId;
     
     /**
+     * @var boolean $isActive
+     */
+    private $isActive;
+    
+    /**
      * @var \DateTime $joinedAt
      */
     private $joinedAt;
     
-    private function __construct(UserId $userId, GuildRoleIdCollection $rolesId= null, \DateTime $joinedAt, NickName $nickname = null)
+    private function __construct(UserId $userId, GuildRoleIdCollection $rolesId= null, \DateTime $joinedAt, NickName $nickname, bool $isActive)
     {
         $this->userId = $userId;
         $this->rolesId = $rolesId;
@@ -43,33 +48,44 @@ class GuildMember
         return $this->userId;
     }
     
-    public function getRoles() : GuildRoleIdCollection
+    public function addRole(GuildRole $role) : self
     {
-        return $this->rolesId;
+        $this->rolesId->add($role->getId());
+        return $this;
     }
     
-    public function getNickname() : ?NickName
+    public function getNickname() : NickName
     {
         return $this->nickname;
+    }
+    
+    public function changeNickname(NickName $nickname) : self
+    {
+        $this->nickname = $nickname;
+        return $this;
+    }
+    
+    public function getRolesIds() : array
+    {
+        return $this->rolesId->getIterator();
     }
     
     public function getJoinDate() : \DateTime
     {
         return $this->joinedAt;
     }
-    
     public function toArray() : array
     {
         return [
-            'user' => $this->user,
-            'nickname' => $this->nickname,
-            'roles' => $rolesId,
+            'user_id' => $this->userId->get(),
+            'nickname' => $this->nickname->__toString(),
+            'roles' => $this->rolesId->toArray(),
         ];
     }
     
-    public static function create(UserId $userId, GuildRoleIdCollection $roles, \DateTime $joinedAt, NickName $nickname = null)
+    public static function create(UserId $userId, GuildRoleIdCollection $roles, \DateTime $joinedAt, NickName $nickname, bool $isActive = true)
     {
-        return new self($userId, $roles, $joinedAt, $nickname);
+        return new self($userId, $roles, $joinedAt, $nickname, $isActive);
     }
     
 }

@@ -14,10 +14,10 @@ interface GuildMemberRepository
     
     public function remove(GuildMember $member);
     
-    public function getAll() : GuildMemberCollection;
+    public function getAll(GuildId $guildId) : GuildMemberCollection;
     
     public function findById(UserId $id) : GuildMember;
     
-    public function getGuildMember(GuildId $guildId, UserId $memberId) : ?GuildMember;
+//     public function getGuildMember(GuildId $guildId, UserId $memberId) : ?GuildMember;
     
 }

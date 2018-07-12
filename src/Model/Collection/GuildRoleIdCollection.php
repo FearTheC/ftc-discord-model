@@ -3,8 +3,9 @@
 namespace FTC\Discord\Model\Collection;
 
 use FTC\Discord\Model\ValueObject\Snowflake\RoleId;
+use FTC\Discord\Model\Collection;
 
-class GuildRoleIdCollection implements \IteratorAggregate
+class GuildRoleIdCollection implements Collection
 {
     /**
      * @var RoleId[];
@@ -33,9 +34,8 @@ class GuildRoleIdCollection implements \IteratorAggregate
         return $this->rolesIds;
     }
     
-    
     public function toArray()
     {
-        return $this->rolesIds;
+        return array_map(function($roleId) { return $roleId->get(); }, $this->rolesIds);
     }
 }

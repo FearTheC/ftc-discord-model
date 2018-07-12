@@ -11,7 +11,6 @@ class GuildRoleFactory
     public static function fromMessage($message)
     {
         
-        var_dump($message);
 //         $roles = array_map([GuildRole::class, 'fromDbRow'], $message->getRoles());
 //         $roles = new GuildRoleCollection($message->getRoles());
         

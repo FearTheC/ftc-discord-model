@@ -11,10 +11,12 @@ interface GuildRoleRepository
 {
     public function save(GuildRole $member, GuildId $guildId);
     
-    public function getAll() : GuildRoleCollection;
+    public function getAll(GuildId $guildId) : GuildRoleCollection;
     
     public function findById(RoleId $id) : GuildRole;
     
     public function findByName(RoleName $name, GuildId $guildId) : ?GuildRole;
+    
+    public function getEveryoneRole(GuildId $guildId) : GuildRole;
     
 }

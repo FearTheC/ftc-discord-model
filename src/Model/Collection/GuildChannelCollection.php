@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace FTC\Discord\Model\Collection;
 
 use FTC\Discord\Model\Aggregate\GuildChannel;
+use FTC\Discord\Model\Collection;
 
-class GuildChannelCollection
+class GuildChannelCollection implements Collection
 {
     /**
      * @var Channel[];
