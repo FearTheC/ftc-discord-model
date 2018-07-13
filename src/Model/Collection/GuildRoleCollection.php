@@ -4,6 +4,7 @@ namespace FTC\Discord\Model\Collection;
 
 use FTC\Discord\Model\Aggregate\GuildRole;
 use FTC\Discord\Model\Collection;
+use FTC\Discord\Model\ValueObject\Snowflake\RoleId;
 
 class GuildRoleCollection implements Collection
 {
@@ -24,9 +25,9 @@ class GuildRoleCollection implements Collection
         return $this;
     }
     
-    public function getById(int $id)
+    public function getById(RoleId $id)
     {
-        return $this->roles[$id];
+        return $this->roles[$id->get()];
     }
     
     public function filterByIds(array $ids)

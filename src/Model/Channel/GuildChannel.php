@@ -10,6 +10,11 @@ use FTC\Discord\Model\Aggregate\GuildChannel as GuildChannelSup;
 
 abstract class GuildChannel extends GuildChannelSup
 {
+    const POS_COEFF = [
+        0 => 1,
+        2 => 10,
+        4 => 100,
+    ];
     
     /**
      * @var CategoryId $categoryId
@@ -64,6 +69,11 @@ abstract class GuildChannel extends GuildChannelSup
     public function getCategoryId() : ?ChannelId
     {
         return $this->categoryId;
+    }
+    
+    public function getPositionnalBaseCoeff()
+    {
+        return self::POS_COEFF[$this->getTypeId()] * ($this->getPosition() + 1);
     }
     
 }

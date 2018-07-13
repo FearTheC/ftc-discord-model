@@ -30,6 +30,14 @@ class GuildMemberCollection implements Collection
         
         return $this;
     }
+    
+    public function orderAlphabetically()
+    {
+        $members = $this->members;
+        usort($members, function($a, $b) { return strcmp((string) $a->getNickname(), (string) $b->getNickname()); });
+        
+        return new self(...$members);
+    }
 
     
     public function count()
