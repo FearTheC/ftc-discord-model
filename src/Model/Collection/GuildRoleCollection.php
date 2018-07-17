@@ -11,7 +11,7 @@ class GuildRoleCollection implements Collection
     /**
      * @var GuildRole[];
      */
-    private $roles;
+    private $roles = [];
     
     public function __construct(GuildRole ...$array)
     {
@@ -38,6 +38,18 @@ class GuildRoleCollection implements Collection
                 return in_array($role->getId()->get(), $ids);
             }
         );
+        
+        return new self(...$filteredRoles);
+    }
+    
+    public function excludeByIds(array $ids)
+    {
+        $filteredRoles = array_filter(
+            $this->roles,
+            function($role) use ($ids) {
+                return !in_array($role->getId()->get(), $ids);
+            }
+            );
         
         return new self(...$filteredRoles);
     }
