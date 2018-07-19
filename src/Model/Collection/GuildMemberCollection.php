@@ -12,7 +12,7 @@ class GuildMemberCollection implements Collection
     /**
      * @var GuildMember[];
      */
-    private $members;
+    private $members= [];
     
     public function __construct(GuildMember ...$array)
     {
