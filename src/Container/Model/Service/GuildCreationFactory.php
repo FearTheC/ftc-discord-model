@@ -10,6 +10,7 @@ use FTC\Discord\Model\Aggregate\GuildMemberRepository;
 use FTC\Discord\Model\Aggregate\GuildRoleRepository;
 use FTC\Discord\Model\Aggregate\GuildChannelRepository;
 use FTC\Discord\Model\Service\GuildCreation;
+use FTC\Discord\Model\Aggregate\GuildWebsitePermissionRepository;
 
 class GuildCreationFactory
 {
@@ -20,8 +21,9 @@ class GuildCreationFactory
         $guildMemberRepository = $container->get(GuildMemberRepository::class);
         $guildRoleRepository = $container->get(GuildRoleRepository::class);
         $guildChannelRepository = $container->get(GuildChannelRepository::class);
+        $websitePermissionsRepository = $container->get(GuildWebsitePermissionRepository::class);
         
-        return new GuildCreation($guildRepository, $guildMemberRepository, $guildRoleRepository, $guildChannelRepository);
+        return new GuildCreation($guildRepository, $guildMemberRepository, $guildRoleRepository, $guildChannelRepository, $websitePermissionsRepository);
     }
     
 }
