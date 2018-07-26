@@ -17,16 +17,6 @@ class Text implements ModelObject
      */
     private $value;
     
-    /**
-     * @var int $maxSize
-     */
-    private $maxSize = null;
-    
-    /**
-     * @var int $minSize
-     */
-    private $minSize = null;
-    
     private function __construct(string $value)
     {
         $value = trim($value);
@@ -46,7 +36,17 @@ class Text implements ModelObject
         return new static($value);
     }
     
-    public function __toString()
+    public function getMaxLength() : int
+    {
+        return static::MAX_LENGTH;
+    }
+    
+    public function getMinLength() : int
+    {
+        return static::MIN_LENGTH;
+    }
+    
+    public function __toString() : string
     {
         return $this->value;
     }

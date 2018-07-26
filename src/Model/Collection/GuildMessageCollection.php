@@ -21,12 +21,12 @@ class GuildMessageCollection implements Collection
     
     public function getById(MessageId $id) : GuildMessage
     {
-        return $this->messages[$id->get()];
+        return $this->messages[(int) (string) $id];
     }
     
     public function add(GuildMessage $message)
     {
-        $this->messages[(int) $message->getId()] = $message;
+        $this->messages[(int) (string) $message->getId()] = $message;
         
         return $this;
     }
