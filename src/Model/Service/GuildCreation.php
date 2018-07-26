@@ -14,6 +14,12 @@ use FTC\Discord\Model\Collection\GuildChannelCollection;
 class GuildCreation
 {
     
+    const ROUTES_TO_ALLOW = [
+        'home',
+        'login',
+        'logout',
+    ];
+    
     /**
      * @var GuildRepository $guildRepository
      */
