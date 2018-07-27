@@ -47,18 +47,37 @@ class ErrorMessage
     {
         return $this->id;
     }
+    public function getCode() : int
+    {
+        return $this->code;
+    }
+    
+    public function getMessage() : Text
+    {
+        return $this->errorMessage;
+    }
+    
+    public function getFile() : Text
+    {
+        return $this->file;
+    }
+    
+    public function getLine() : int
+    {
+        return $this->line;
+    }
     
     public function getLocation()
     {
         return sprintf('%s:%s', $this->file, $this->line);
     }
     
-    public function getTime()
+    public function getTime() : \DateTime
     {
         return $this->time;
     }
     
-    public function getContext()
+    public function getContext() : Text
     {
         return $this->context;
     }
@@ -93,6 +112,10 @@ class ErrorMessage
         $errorMessage = Text::create($errorMessage);
         $file = Text::create($file);
         $context = Text::create($context);
+        if (!$time) {
+            $time = (new \DateTime())->format('c');
+        }
+        
         $time = new \DateTime($time);
         
         return new self($id, $code, $errorMessage, $file, $line, $context, $time);
