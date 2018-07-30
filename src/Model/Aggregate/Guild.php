@@ -2,14 +2,11 @@
 namespace FTC\Discord\Model\Aggregate;
 
 use FTC\Discord\Model\ValueObject\Snowflake;
-use FTC\Discord\Model\Collection\GuildRoleCollection;
 use FTC\Discord\Model\Collection\GuildMemberCollection;
 use FTC\Discord\Model\Collection\ChannelCollection;
-use FTC\Discord\Model\Channel\GuildChannel;
 use FTC\Discord\Model\ValueObject\Snowflake\GuildId;
 use FTC\Discord\Model\ValueObject\Snowflake\UserId;
 use FTC\Discord\Model\ValueObject\Name\GuildName;
-use FTC\Discord\Model\Collection\GuildChannelCollection;
 use FTC\Discord\Model\ValueObject\DomainName;
 use FTC\Discord\Model\Collection\GuildRoleIdCollection;
 use FTC\Discord\Model\Collection\GuildMemberIdCollection;
@@ -51,6 +48,11 @@ class Guild
      * @var DomainName $domainName
      */
     private $domainName;
+    
+    /**
+     * @var \DateTime
+     */
+    private $joinedDate;
     
     
     public function getOwner() : GuildMember
@@ -94,33 +96,47 @@ class Guild
         return $this->members;
     }
     
+    public function getAssetsFolderName()
+    {
+        return md5((string) $this->id); 
+    }
+    
+    public function getJoinedDate() : \DateTime
+    {
+        return $this->joinedDate;
+    }
+    
     private function __construct(
         GuildId $id,
         GuildName $name,
         UserId $ownerId,
+        \DateTime $joinedDate,
         GuildRoleIdCollection$roles,
         GuildMemberIdCollection$members,
         GuildChannelIdCollection$channels,
         DomainName $domainName = null
-    ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->ownerId = $ownerId;
-        $this->roles = $roles;
-        $this->members = $members;
-        $this->channels = $channels;
-        $this->domainName = $domainName;
+        ) {
+            $this->id = $id;
+            $this->name = $name;
+            $this->ownerId = $ownerId;
+            $this->joinedDate = $joinedDate;
+            $this->roles = $roles;
+            $this->members = $members;
+            $this->channels = $channels;
+            $this->domainName = $domainName;
     }
     
     public static function create(
         Snowflake $id,
         GuildName $name,
         Snowflake $ownerId,
+        \DateTime $joinedDate,
         GuildRoleIdCollection $roles,
         GuildMemberIdCollection $members,
         GuildChannelIdCollection $channels,
         DomainName $domainName = null
         ) {
-            return new self($id, $name, $ownerId, $roles, $members, $channels, $domainName);
+            return new self($id, $name, $ownerId, $joinedDate, $roles, $members, $channels, $domainName);
     }
+    
 }
