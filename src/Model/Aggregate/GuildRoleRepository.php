@@ -11,6 +11,8 @@ interface GuildRoleRepository
 {
     public function save(GuildRole $member, GuildId $guildId);
     
+    public function delete(RoleId $roleId) : bool;
+    
     public function getAll(GuildId $guildId) : GuildRoleCollection;
     
     public function findById(RoleId $id) : GuildRole;

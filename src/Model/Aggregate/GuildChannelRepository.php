@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace FTC\Discord\Model\Aggregate;
 
 use FTC\Discord\Model\ValueObject\Snowflake\ChannelId;
@@ -9,6 +12,8 @@ interface GuildChannelRepository
 {
     
     public function save(GuildChannel $guild, GuildId $guildId);
+    
+    public function delete(ChannelId $channelId) : bool;
     
     public function findById(ChannelId $id) : ?GuildChannel;
     

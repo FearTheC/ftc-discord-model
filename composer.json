@@ -1,5 +1,5 @@
 {
-	"name" : "qbonaventure/discord-model",
+	"name" : "fearthec/ftc-discord-model",
 	"type" : "library",
 	"license" : "MIT",
 	"authors" : [{
@@ -8,6 +8,8 @@
 		}
 	],
 	"require" : {
+		"psr/container": "^1.0",
+		"guzzlehttp/guzzle": "^6.3"
 	},
 	"require-dev" : {
 		"phpunit/phpunit" : "^7.2",

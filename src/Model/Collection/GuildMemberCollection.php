@@ -6,8 +6,11 @@ namespace FTC\Discord\Model\Collection;
 use FTC\Discord\Model\Aggregate\GuildMember;
 use FTC\Discord\Model\ValueObject\Snowflake;
 use FTC\Discord\Model\Collection;
+use FTC\Discord\Model\AggregateCollection;
+use FTC\Discord\Model\ValueObject\Snowflake\UserId;
+use FTC\Discord\Model\IdsCollection;
 
-class GuildMemberCollection implements Collection
+class GuildMemberCollection implements AggregateCollection
 {
     /**
      * @var GuildMember[];
@@ -29,6 +32,13 @@ class GuildMemberCollection implements Collection
         $this->members[$member->getId()->get()] = $member;
         
         return $this;
+    }
+    
+    public function getIds() : IdsCollection
+    {
+        $ids = array_map(UserId::create($id), array_keys($this->members));
+        
+        return new GuildMemberIdCollection(...$ids);
     }
     
     public function orderAlphabetically()

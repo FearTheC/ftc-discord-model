@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FTC\Discord\Model\ValueObject;
 
@@ -73,6 +75,11 @@ class Permission
     public function __toString()
     {
         return (string) $this->permisions;
+    }
+    
+    public static function create($value)
+    {
+        return new self($value);
     }
     
 }

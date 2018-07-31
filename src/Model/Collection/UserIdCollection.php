@@ -8,7 +8,7 @@ use FTC\Discord\Model\ValueObject\Snowflake\UserId;
 use FTC\Discord\Model\Collection;
 use FTC\Discord\Model\IdsCollection;
 
-class GuildMemberIdCollection extends IdsCollection
+class UserIdCollection extends IdsCollection
 {
     
     public function __construct(UserId ...$usersIds)

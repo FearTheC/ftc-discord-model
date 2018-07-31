@@ -48,6 +48,7 @@ class GuildCreation
      */
     private $websitePermissionRepository;
     
+    
     public function __construct(
         GuildRepository $guildRepository,
         GuildMemberRepository $guildMemberRepository,
@@ -62,14 +63,35 @@ class GuildCreation
         $this->websitePermissionRepository = $websitePermissionRepository;
     }
     
+    
     public function __invoke(
         Guild $guild,
         GuildRoleCollection $roles,
         GuildMemberCollection $members,
         GuildChannelCollection $channels
      ) {
+        if ($knownGuildState = $this->guildRepository->findById($guild->getId())) {
+            $this->deleteMissingElements($guild, $knownGuildState);
+        }
         $this->guildRepository->save($guild);
+        $this->saveElements($guild, $roles, $members, $channels);
         
+        array_map(
+            function ($routeToPermit) use ($guild) {
+                $roleId = RoleId::create((int) (string) $guild->getId());
+                $permission = new GuildWebsitePermission($guild->getId(), $roleId, $routeToPermit);
+                $this->websitePermissionRepository->save($permission);
+            },
+            self::ROUTES_TO_ALLOW
+        );
+    }
+    
+    private function saveElements(
+        Guild $guild,
+        GuildRoleCollection $roles,
+        GuildMemberCollection $members,
+        GuildChannelCollection $channels
+    ) : void {
         array_map(
             [$this->guildRoleRepository, 'save'],
             $roles->getIterator(),
@@ -87,15 +109,22 @@ class GuildCreation
             $channels->getIterator(),
             array_fill(0, $channels->count(), $guild->getId())
             );
-        
+    }
+    
+    private function deleteMissingElements(Guild $newGuildState, Guild $knownGuildState) : void
+    {
         array_map(
-            function ($routeToPermit) use ($guild) {
-                $roleId = RoleId::create((int) (string) $guild->getId());
-                $permission = new GuildWebsitePermission($guild->getId(), $roleId, $routeToPermit);
-                $this->websitePermissionRepository->save($permission);
-            },
-            self::ROUTES_TO_ALLOW
-        );
+            [$this->guildRoleRepository, 'delete'],
+            $newGuildState->getRoles()->getHasNot($knownGuildState->getRoles())->getIterator()
+            );
+        array_map(
+            [$this->guildChannelRepository, 'delete'],
+            $newGuildState->getChannels()->getHasNot($knownGuildState->getChannels())->getIterator()
+            );
+        array_map(
+            [$this->guildMemberRepository, 'delete'],
+            $newGuildState->getMembers()->getHasNot($knownGuildState->getMembers())->getIterator()
+            );
     }
     
 }

@@ -12,12 +12,10 @@ interface GuildMemberRepository
     
     public function save(GuildMember $member, GuildId $guildId);
     
-    public function remove(GuildMember $member);
+    public function delete(GuildMember $member, GuildId $guildId) : bool;
     
     public function getAll(GuildId $guildId) : GuildMemberCollection;
     
     public function findById(UserId $id) : GuildMember;
-    
-//     public function getGuildMember(GuildId $guildId, UserId $memberId) : ?GuildMember;
     
 }

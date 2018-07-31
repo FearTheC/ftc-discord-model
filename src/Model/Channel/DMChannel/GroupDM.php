@@ -1,6 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace FTC\Discord\Model\GuildChannel;
+declare(strict_types=1);
+
+namespace FTC\Discord\Model\Channel\DMChannel;
 
 use FTC\Discord\Model\Channel\DMChannel;
 
@@ -10,6 +12,6 @@ class GroupDM extends DMChannel
     /**
      * @var int $typeId
      */
-    private $typeId = self::GROUP_DM;
+    protected $typeId = self::GROUP_DM;
     
 }

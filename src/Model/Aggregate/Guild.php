@@ -47,7 +47,7 @@ class Guild
     /**
      * @var DomainName $domainName
      */
-    private $domainName;
+    private $domainName = null;
     
     /**
      * @var \DateTime
@@ -76,7 +76,7 @@ class Guild
         return $this->id;
     }
     
-    public function getDomainName()
+    public function getDomainName() : ?string
     {
         return (string) $this->domainName;
     }

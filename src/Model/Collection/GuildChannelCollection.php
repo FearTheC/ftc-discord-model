@@ -6,8 +6,10 @@ namespace FTC\Discord\Model\Collection;
 use FTC\Discord\Model\Channel\GuildChannel;
 use FTC\Discord\Model\Collection;
 use FTC\Discord\Model\ValueObject\Snowflake\ChannelId;
+use FTC\Discord\Model\AggregateCollection;
+use FTC\Discord\Model\IdsCollection;
 
-class GuildChannelCollection implements Collection
+class GuildChannelCollection implements AggregateCollection
 {
     /**
      * @var GuildChannel[];
@@ -29,6 +31,13 @@ class GuildChannelCollection implements Collection
     public function getById(ChannelId $channelId) : ?GuildChannel
     {
         return $this->channels[$channelId->get()];
+    }
+    
+    public function getIds() : IdsCollection
+    {
+        $ids = array_map(ChannelId::create((int) $id), array_keys($this->channels));
+        
+        return new GuildChannelIdCollection(...$ids);
     }
     
     public function displayOrder()

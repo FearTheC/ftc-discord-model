@@ -3,19 +3,24 @@
 namespace FTC\Discord\Model\Channel;
 
 use FTC\Discord\Model\Channel;
-use FTC\Discord\Model\ValueObject\Snowflake;
-use FTC\Discord\Model\Collection\UserCollection;
+use FTC\Discord\Model\ValueObject\Snowflake\UserId;
+use FTC\Discord\Model\ValueObject\Snowflake\ChannelId;
+use FTC\Discord\Model\Collection\UserIdCollection;
+use FTC\Discord\Model\Aggregate\GuildChannel;
 
-abstract class DMChannel extends Channel
+abstract class DMChannel extends GuildChannel
 {
-    /**
-     * @var Snowflake $ownerId;
-     */
-    private $ownerId;
     
     /**
-     * @var GuildMemberCollection $recipients 
+     * @var UserIdCollection
      */
-    private $recipients;
+    protected $recipientsId;
+    
+    
+    protected function __construct(ChannelId $id, UserIdCollection $recipientsId)
+    {
+        $this->recipientsId = $recipientsId;
+        parent::__construct($id);
+    }
     
 }

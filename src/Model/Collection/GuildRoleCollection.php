@@ -5,8 +5,10 @@ namespace FTC\Discord\Model\Collection;
 use FTC\Discord\Model\Aggregate\GuildRole;
 use FTC\Discord\Model\Collection;
 use FTC\Discord\Model\ValueObject\Snowflake\RoleId;
+use FTC\Discord\Model\AggregateCollection;
+use FTC\Discord\Model\IdsCollection;
 
-class GuildRoleCollection implements Collection
+class GuildRoleCollection implements AggregateCollection
 {
     /**
      * @var GuildRole[];
@@ -28,6 +30,13 @@ class GuildRoleCollection implements Collection
     public function getById(RoleId $id)
     {
         return $this->roles[$id->get()];
+    }
+    
+    public function getIds() : IdsCollection
+    {
+        $ids = array_map(RoleId::create((int) $id), array_keys($this->roles));
+        
+        return new GuildRoleIdCollection(...$ids);
     }
     
     public function filterByIds(array $ids)

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace FTC\Discord\Model\Aggregate;
@@ -35,12 +36,13 @@ class GuildMember
      */
     private $joinedAt;
     
-    private function __construct(UserId $userId, GuildRoleIdCollection $rolesId= null, \DateTime $joinedAt, NickName $nickname, bool $isActive)
+    private function __construct(UserId $userId, GuildRoleIdCollection $rolesId, \DateTime $joinedAt, NickName $nickname, bool $isActive = true)
     {
         $this->userId = $userId;
         $this->rolesId = $rolesId;
         $this->nickname = $nickname;
         $this->joinedAt = $joinedAt;
+        $this->isActive = $isActive;
     }
     
     public function getId() : UserId
@@ -62,6 +64,7 @@ class GuildMember
     public function changeNickname(NickName $nickname) : self
     {
         $this->nickname = $nickname;
+        
         return $this;
     }
     
@@ -74,6 +77,7 @@ class GuildMember
     {
         return $this->joinedAt;
     }
+    
     public function toArray() : array
     {
         return [
@@ -83,7 +87,12 @@ class GuildMember
         ];
     }
     
-    public static function create(UserId $userId, GuildRoleIdCollection $roles, \DateTime $joinedAt, NickName $nickname, bool $isActive = true)
+    public static function register(UserId $userId, GuildRoleIdCollection $roles, NickName $nickname) : self
+    {
+        return new self($userId, $roles, new \DateTime(), $nickname);
+    }
+    
+    public static function create(UserId $userId, GuildRoleIdCollection $roles, \DateTime $joinedAt, NickName $nickname, bool $isActive = true) : self
     {
         return new self($userId, $roles, $joinedAt, $nickname, $isActive);
     }
