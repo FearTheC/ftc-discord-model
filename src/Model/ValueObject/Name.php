@@ -35,7 +35,8 @@ class Name implements ModelObject
     {
         $value = trim($value);
         $value = $this->removeExcessiveWhiteSpaces($value);
-        $strLen = strlen($value);
+        $strLen = mb_strlen($value);
+        
         if (static::MAX_LENGTH && $strLen > static::MAX_LENGTH) {
             throw new \Exception();
         } 

@@ -20,7 +20,7 @@ class Text implements ModelObject
     private function __construct(string $value)
     {
         $value = trim($value);
-        $strLen = strlen($value);
+        $strLen = mb_strlen($value);
         if (static::MAX_LENGTH && $strLen > static::MAX_LENGTH) {
             throw new \Exception();
         } 
