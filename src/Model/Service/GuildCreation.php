@@ -113,6 +113,8 @@ class GuildCreation
     
     private function deleteMissingElements(Guild $newGuildState, Guild $knownGuildState) : void
     {
+        $membersIdsToRemove = $newGuildState->getMembers()->getHasNot($knownGuildState->getMembers());
+        
         array_map(
             [$this->guildRoleRepository, 'delete'],
             $newGuildState->getRoles()->getHasNot($knownGuildState->getRoles())->getIterator()
@@ -123,8 +125,8 @@ class GuildCreation
             );
         array_map(
             [$this->guildMemberRepository, 'delete'],
-            $newGuildState->getMembers()->getHasNot($knownGuildState->getMembers())->getIterator(),
-            array_fill(0, $newGuildState->getMembers()->count(), $knownGuildState->getId())
+            $membersIdsToRemove->getIterator(),
+            array_fill(0, $membersIdsToRemove->count(), $knownGuildState->getId())
             );
     }
     
