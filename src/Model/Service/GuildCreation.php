@@ -123,7 +123,8 @@ class GuildCreation
             );
         array_map(
             [$this->guildMemberRepository, 'delete'],
-            $newGuildState->getMembers()->getHasNot($knownGuildState->getMembers())->getIterator()
+            $newGuildState->getMembers()->getHasNot($knownGuildState->getMembers())->getIterator(),
+            array_fill(0, $newGuildState->getMembers()->count(), $knownGuildState->getId())
             );
     }
     
