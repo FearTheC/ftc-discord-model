@@ -17,7 +17,7 @@ class Text implements ModelObject
      */
     private $value;
     
-    private function __construct(string $value)
+    protected function __construct(string $value)
     {
         $value = trim($value);
         $strLen = mb_strlen($value);
