@@ -17,7 +17,7 @@ final class DiscordTagTest extends TestCase
      */
     public function testCreate()
     {
-        $tag = 1234;
+        $tag = '1234';
         $sut = DiscordTag::create($tag);
         $this->assertInstanceOf(DiscordTag::class, $sut);
     }
@@ -28,7 +28,7 @@ final class DiscordTagTest extends TestCase
     public function testSignedTagThrowError()
     {
         $this->expectException(InvalidDiscordTagException::class);
-        $tag = -5647;
+        $tag = '-5647';
         DiscordTag::create($tag);
     }
     
@@ -38,7 +38,7 @@ final class DiscordTagTest extends TestCase
     public function testInvalidDigitsCountThrowsException()
     {
         $this->expectException(InvalidDiscordTagException::class);
-        $tag = 46521;
+        $tag = '46521';
         DiscordTag::create($tag);
     }
 

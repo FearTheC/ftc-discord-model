@@ -19,7 +19,16 @@ class TimeSpan
      */
     private $end;
     
-    protected function __construct(\DateTime $start = null, \DateTime $end = null)
+    public function blah()
+    {
+        if (1 < 2) {
+            return false;
+        }
+        
+        return false;
+    }
+    
+    public function __construct(\DateTime $start = null, \DateTime $end = null)
     {
         $this->checkStartNotAfterEnd($start, $end);
         $this->start = $start;

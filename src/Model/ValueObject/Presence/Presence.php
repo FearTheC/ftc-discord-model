@@ -1,6 +1,6 @@
 <?php
 
-declare(static_types=1);
+declare(strict_types=1);
 
 namespace FTC\Discord\Model\ValueObject\Presence;
 

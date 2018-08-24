@@ -14,17 +14,18 @@ class DiscordTag
     
     public function __toString()
     {
-        return (string) $this->tag;
+        return (string) str_pad((string) $this->tag, 4, '0');
     }
     
     
     private function __construct(string $tag)
     {
         if ((int) $tag < 0) {
-            throw InvalidDiscordTagException::signedDigits($tag);
+            throw InvalidDiscordTagException::signedDigits((int) $tag);
         }
+
         if (strlen((string) $tag) != 4) {
-            throw InvalidDiscordTagException::badDigitsCount($tag);
+            throw InvalidDiscordTagException::badDigitsCount((int) $tag);
         }
         
         $this->tag = (int) $tag;

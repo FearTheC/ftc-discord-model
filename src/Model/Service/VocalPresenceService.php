@@ -41,7 +41,7 @@ class VocalPresenceService
             $this->guildChannelRepository = $guildChannelRepository;
     }
     
-    public function update(UserId $memberId, GuildId $guildId, ChannelId $channelId = null, MD5 $sessionId)
+    public function update(UserId $memberId, GuildId $guildId, ChannelId $channelId = null, MD5 $sessionId, \DateTime $datetime)
     {
         $lastPresence = $this->vocalPresenceRepository->getLastPresence($memberId, $guildId);
 
@@ -56,24 +56,24 @@ class VocalPresenceService
         }
         
         if ($lastPresence && $lastPresence->isActive() && $lastPresence->getChannelId() != $channelId) {
-            $this->memberLeftChannel($lastPresence);
+            $this->memberLeftChannel($lastPresence, $datetime);
         }
         
         if ($channelId) {
             $vp = VocalPresence::create($memberId, $channelId, $sessionId);
-            $this->memberJoinedChannel($vp);
+            $this->memberJoinedChannel($vp, $datetime);
         }
     }
     
-    public function memberLeftChannel(VocalPresence $vp)
+    public function memberLeftChannel(VocalPresence $vp, \Datetime $datetime)
     {
-        $vp->stop();
+        $vp->stop($datetime);
         $this->vocalPresenceRepository->save($vp);
     }
     
-    public function memberJoinedChannel(VocalPresence $vp)
+    public function memberJoinedChannel(VocalPresence $vp, \Datetime $datetime)
     {
-        $vp->start();
+        $vp->start($datetime);
         $this->vocalPresenceRepository->save($vp);
     }
     

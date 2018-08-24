@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FTC\Discord\Model\Aggregate;
+namespace FTC\Discord\Model\ValueObject;
 
 use FTC\Discord\Model\ValueObject\Text;
 
