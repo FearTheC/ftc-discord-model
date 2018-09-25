@@ -10,6 +10,8 @@ use FTC\Discord\Model\ValueObject\Name\UserName;
 class User
 {
     
+    
+    
     private $username;
     
     /**
@@ -94,10 +96,23 @@ class User
     
     public static function fromArray(array $data) : User
     {
+        $email = null;
+        if (array_key_exists('email', $data)) {
+            $email = new Email((string) $data['email']);
+        }
+        
+        $isBot = false;
+        if (array_key_exists('bot', $data)) {
+            $isBot = $data['bot'];
+        }
+        
         return self::create(
-            UserId::create($data['id']),
-            $data['username'],
-            Email::create($data['email']));
+            UserId::create((int) $data['id']),
+            UserName::create((string) $data['username']),
+            DiscordTag::create($data['discriminator']),
+            $email,
+            $isBot
+            );
     }
     
 }
