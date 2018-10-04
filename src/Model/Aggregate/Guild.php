@@ -54,6 +54,11 @@ class Guild
      */
     private $joinedDate;
     
+    /**
+     * @var boolean
+     */
+    private $isDomainActive;
+    
     
     public function getOwner() : GuildMember
     {
@@ -106,6 +111,11 @@ class Guild
         return $this->joinedDate;
     }
     
+    public function isDomainActive() : bool
+    {
+        return $this->isDomainActive;
+    }
+    
     private function __construct(
         GuildId $id,
         GuildName $name,
@@ -114,7 +124,8 @@ class Guild
         GuildRoleIdCollection$roles,
         GuildMemberIdCollection$members,
         GuildChannelIdCollection$channels,
-        DomainName $domainName = null
+        DomainName $domainName = null,
+        bool $isDomainActive = false
         ) {
             $this->id = $id;
             $this->name = $name;
@@ -124,6 +135,7 @@ class Guild
             $this->members = $members;
             $this->channels = $channels;
             $this->domainName = $domainName;
+            $this->isDomainActive = $isDomainActive;
     }
     
     public static function create(
@@ -134,9 +146,10 @@ class Guild
         GuildRoleIdCollection $roles,
         GuildMemberIdCollection $members,
         GuildChannelIdCollection $channels,
-        DomainName $domainName = null
+        DomainName $domainName = null,
+        bool $isDomainActive = false
         ) {
-            return new self($id, $name, $ownerId, $joinedDate, $roles, $members, $channels, $domainName);
+            return new self($id, $name, $ownerId, $joinedDate, $roles, $members, $channels, $domainName, $isDomainActive);
     }
     
 }
